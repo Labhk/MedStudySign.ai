@@ -7,9 +7,17 @@
   margin: 0;
   padding: 0;
   
+  
+}
+
+.bg{
+  background-color: rgb(241, 255, 255);
+}
+
+.home-bg {
+  background: linear-gradient(to top right,rgb(171, 242, 242), rgb(241, 255, 255),rgb(203, 255, 255),rgb(243, 255, 255),rgb(181, 255, 255),rgb(234, 255, 255), rgb(221, 255, 255));
 }
 
 .gradient-bg {
   background: linear-gradient(to bottom left,rgb(171, 242, 242), rgb(241, 255, 255),rgb(203, 255, 255),rgb(243, 255, 255),rgb(243, 255, 255),rgb(247, 255, 255), rgb(173, 255, 255));
-
 }

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { auth, provider } from '../firebase/config';
 import { signInWithPopup } from 'firebase/auth';
 import Header from './components/Header';
+import Main from './components/Main';
 
 export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -27,10 +28,10 @@ export default function Home() {
     <>
       {loggedIn ? (
         // Render this when the user is logged in
-        <div className="">
+        <div className="home-bg">
           <Header setLoggedIn={setLoggedIn} />
           <div className="h-screen flex items-center justify-center text-5xl">
-            HOME BODY
+            <Main/>
           </div>
         </div>
       ) : (
