@@ -45,7 +45,7 @@ export default function Home() {
           </div>
           <div className="">
             <p className="text-lg mt-4 text-gray-600 font-light text-center px-48 leading-8">
-              Simplify the Enrollment Process for Medical Studies. Join us in advancing healthcare research. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce viverra arcu sit amet leo scelerisque, vel auctor arcu tempus.
+              Simplify the Enrollment Process for Medical Studies. Join us in advancing healthcare research.
             </p>
           </div>
           <div className="">
