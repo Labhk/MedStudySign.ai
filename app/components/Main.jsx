@@ -4,6 +4,11 @@ import React, { useState } from 'react';
 
 export default function Main() {
   const [showForm, setShowForm] = useState(false);
+  const [studyDataChanged, setStudyDataChanged] = useState(false);
+
+  const handleFormSubmit = () => {
+    setStudyDataChanged((prev) => !prev);
+  };
 
   return (
     
@@ -19,7 +24,7 @@ export default function Main() {
             </div>
             
             <div className="h-full w-full  shadow-div rounded-xl bg">
-                <ResearchStudy/>
+                <ResearchStudy studyDataChanged={studyDataChanged}/>
             </div>
         </div>
         <div className="h-1/2 mt-3">
@@ -42,7 +47,7 @@ export default function Main() {
       </div>
     </div>
     <div className="">
-        <StudyForm showForm={showForm} setShowForm={setShowForm}/>
+    <StudyForm showForm={showForm} setShowForm={setShowForm} onSubmit={handleFormSubmit}  />
     </div>
     </>
   );

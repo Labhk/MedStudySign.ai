@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { doc, setDoc } from "firebase/firestore";
+import { db, auth } from '../../firebase/config';
+import { onAuthStateChanged  } from 'firebase/auth';
 
-export default function StudyForm({ showForm, setShowForm }) {
+export default function StudyForm({ showForm, setShowForm, onSubmit }) {
   const [formData, setFormData] = useState({
     researchTopic: '',
     clinicName: '',
-    durationDate: '',
+    duration: '',
     cliniciansName: '',
     researchDescription: '',
   });
@@ -16,17 +19,40 @@ export default function StudyForm({ showForm, setShowForm }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can perform actions with the formData here, like sending it to a server.
+    onAuthStateChanged(auth, (user) => {
+      
+      if (user) {
+        const uid = user.uid;
+        setDoc(doc(db, "researchStudy", uid), {
+          topic: formData.researchTopic,
+          clinicName: formData.clinicName,
+          clinician: formData.cliniciansName,
+          ResearchDescription: formData.researchDescription, 
+          Duration: formData.duration,
+        })
+          .then(() => {
+            console.log("Document created successfully");
+            onSubmit();
+          })
+          .catch((error) => {
+            console.error("Error updating document: ", error);
+          });
+      } else {
+        console.log("User not signed in");
+      }
+    });
+    
+    
     console.log(formData);
-    // Reset the form fields
+
     setFormData({
       researchTopic: '',
       clinicName: '',
-      durationDate: '',
+      duration: '',
       cliniciansName: '',
       researchDescription: '',
     });
-    // Close the form modal by updating the parent component's state
+
     setShowForm(false);
   };
 
@@ -65,11 +91,11 @@ export default function StudyForm({ showForm, setShowForm }) {
                 />
               </div>
               <div className="mb-4">
-                <label className="block font-medium">Duration/Date:</label>
+                <label className="block font-medium">Duration:</label>
                 <input
                   type="text"
-                  name="durationDate"
-                  value={formData.durationDate}
+                  name="duration"
+                  value={formData.duration}
                   onChange={handleInputChange}
                   className="w-full border rounded py-2 px-3"
                 />
