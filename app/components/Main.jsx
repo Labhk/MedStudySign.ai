@@ -23,7 +23,7 @@ export default function Main() {
             </div>
         </div>
         <div className="h-1/2 mt-3">
-            <div className="text-lg font-semibold">Upload Consent Document</div>
+            <div className="text-lg font-semibold ml-3">Upload Consent Document</div>
             <div className="h-full w-full  shadow-div rounded-xl bg">
 
             </div>
