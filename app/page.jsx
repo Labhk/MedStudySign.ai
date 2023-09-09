@@ -44,7 +44,7 @@ export default function Home() {
             </div>
           </div>
           <div className="">
-            <p className="text-lg mt-4 text-gray-600 font-light text-center px-48 leading-8">
+            <p className="text-xl mt-4 text-gray-600 font-light text-center px-48 leading-8">
               Simplify the Enrollment Process for Medical Studies. Join us in advancing healthcare research.
             </p>
           </div>
