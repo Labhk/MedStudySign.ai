@@ -17,6 +17,7 @@ export default function Home() {
 
       localStorage.setItem('status', 'Logged In');
       localStorage.setItem('email', user.email);
+      localStorage.setItem('authID', user.uid);
 
       setLoggedIn(true);
     } catch (error) {
@@ -30,7 +31,7 @@ export default function Home() {
         // Render this when the user is logged in
         <div className="home-bg">
           <Header setLoggedIn={setLoggedIn} />
-          <div className="h-screen flex items-center justify-center text-5xl">
+          <div className="min-h-screen flex text-5xl">
             <Main/>
           </div>
         </div>

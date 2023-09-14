@@ -23,6 +23,7 @@ export default function Header({ setLoggedIn }) {
             setShowLogout(false);
             setLoggedIn(false);
             localStorage.removeItem('email')
+            localStorage.removeItem('authID')
             localStorage.setItem('status',"Logged Out")
         } catch (error) {
         console.error('Sign-out error:', error);
@@ -44,7 +45,7 @@ export default function Header({ setLoggedIn }) {
 
         {user ? (
             <div
-            className="flex items-center relative hover:bg-slate-100 rounded-md p-2"
+            className="flex items-center relative hover:bg-white rounded-md p-2"
             onMouseEnter={() => setShowLogout(true)}
             onMouseLeave={() => setShowLogout(false)}
             >
