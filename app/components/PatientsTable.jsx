@@ -79,8 +79,8 @@ export default function PatientsTable({ patientDataChanged }) {
             </tbody>
           </table>
         ) : (
-          <div className="flex flex-col justify-center items-center text-center text-lg font-medium h-full w-full"> {/* Centered message */}
-            <div className=""><img src="https://i.ibb.co/0hW3gXS/forbidden.png" className="h-16" alt="x" /></div>
+          <div className="flex flex-col justify-center items-center text-center text-lg font-medium h-full w-full p-16">
+            <div className=""><img src="https://i.ibb.co/0hW3gXS/forbidden.png" className="h-16 " alt="x" /></div>
             <div className="mt-3 text-gray-800">No Patients Added</div>
           </div>
         )}
