@@ -39,7 +39,7 @@ export default function ResearchStudy({studyDataChanged}) {
     <div className="flex flex-col px-6 py-4">
       {loading ? (
         <div className="flex flex-col justify-center items-center text-center py-10 text-lg font-medium ">
-        <div className=""><img src="/spin.gif"  alt="x" /></div>
+        <div className=""><img src="/spin.gif" className="h-14"  alt="x" /></div>
       </div>
       ) : (
         study.length > 0 ? ( 

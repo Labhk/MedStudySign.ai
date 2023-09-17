@@ -7,11 +7,16 @@
   margin: 0;
   padding: 0;
   
-  
 }
+
+
 
 .bg{
   background-color: rgb(241, 255, 255);
+}
+
+.alt-bg{
+  background-color: rgb(225, 251, 251);
 }
 
 .home-bg {

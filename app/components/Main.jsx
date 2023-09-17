@@ -11,10 +11,14 @@ import UploadDoc from "./UploadDoc";
 import { doc, getDoc   } from "firebase/firestore";
 import { db } from '../../firebase/config';
 import PDFViewer from "./PDFViewer";
+import NewPatient from "./NewPatient";
+import PatientsTable from "./PatientsTable";
 
 export default function Main() {
-  const [showForm, setShowForm] = useState(false);
+  const [showStudyForm, setShowStudyForm] = useState(false); 
+  const [showPatientForm, setShowPatientForm] = useState(false);
   const [studyDataChanged, setStudyDataChanged] = useState(false);
+  const [patientDataChanged, setPatientDataChanged] = useState(false);
   const [isDocUploaded, setIsDocUploaded] = useState(false);
   const [showPDFViewer, setShowPDFViewer] = useState(false);
   const [downloadURL, setDownloadURL] = useState("");
@@ -29,6 +33,10 @@ export default function Main() {
 
   const handleFormSubmit = () => {
     setStudyDataChanged((prev) => !prev);
+  };
+
+  const handlePatientSubmit = () => {
+    setPatientDataChanged((prev) => !prev);
   };
 
   useEffect(() => {
@@ -63,7 +71,7 @@ export default function Main() {
         <div className="flex flex-col">
             <div className="flex justify-between items-end py-2">
             <div className="text-2xl font-semibold ml-3 flex gap-1 justify-center items-center"><HiDocumentText /><span className="mt-1 text-lg">Research Study</span></div>
-            <div className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal  hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1" onClick={() => {setShowForm(true)}}><MdAddCircle/>New Study </div>
+            <div className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1" onClick={() => {setShowStudyForm(true)}}><MdAddCircle/>New Study </div>
             </div>
             
             <div className="h-full w-full  shadow-div rounded-xl bg ">
@@ -98,16 +106,20 @@ export default function Main() {
       <div className="w-3/5 pl-5">
       <div className="flex justify-between items-end py-2">
             <div className="text-2xl font-semibold ml-3 flex gap-2 items-center"><BsFillPeopleFill /><span className="mt-1 text-lg mb-1">Patients</span></div>
-            <div className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal  hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1"><BsPersonFillAdd/> New Patient </div>
+            <div className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1" onClick={() => {setShowPatientForm(true)}}><BsPersonFillAdd/> New Patient </div>
             </div>
             
             <div className="h-[85vh] w-full shadow-div rounded-xl bg">
-                Table
+                <PatientsTable patientDataChanged={patientDataChanged}/>
             </div>
       </div>
     </div>
     <div className="">
-    <StudyForm showForm={showForm} setShowForm={setShowForm} onSubmit={handleFormSubmit}  />
+    <StudyForm showForm={showStudyForm} setShowForm={setShowStudyForm} onSubmit={handleFormSubmit}  />
+
+    </div>
+    <div className="">
+    <NewPatient showForm={showPatientForm} setShowForm={setShowPatientForm} onSubmit={handlePatientSubmit}/>
     </div>
     {showPDFViewer && (
         <PDFViewer downloadURL={downloadURL} onClose={() => closePDFViewer()} />
