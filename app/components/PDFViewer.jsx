@@ -2,7 +2,7 @@ import { ImCross } from 'react-icons/im';
 
 export default function PDFViewer({ downloadURL, onClose }) {
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70">
+    <div className="fixed inset-0 flex justify-center items-center z-20 bg-black bg-opacity-70">
       <div className="bg-white px-4 py-2 rounded-lg shadow-lg w-full mx-20">
         <div className="flex justify-end">
           <button

@@ -15,8 +15,9 @@ export default function NewPatient({ showForm, setShowForm, onSubmit}) {
         const signatureStatus = 'Not sent';
 
         const newPatient = {
+          pid: `p${Math.floor(Math.random()*(999-100+1)+100)}`,
           email: email,
-          currentDate: currentDate,
+          currentDate: '-',
           signatureStatus: signatureStatus,
         };
 
