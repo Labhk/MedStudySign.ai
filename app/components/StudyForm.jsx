@@ -29,6 +29,7 @@ export default function StudyForm({ showForm, setShowForm, onSubmit }) {
           clinician: formData.cliniciansName,
           ResearchDescription: formData.researchDescription, 
           Duration: formData.duration,
+          email: user.email,
         })
           .then(() => {
             console.log("Document created successfully");
@@ -42,9 +43,6 @@ export default function StudyForm({ showForm, setShowForm, onSubmit }) {
       }
     });
     
-    
-    console.log(formData);
-
     setFormData({
       researchTopic: '',
       clinicName: '',

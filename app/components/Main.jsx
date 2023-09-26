@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import {HiDocumentText} from 'react-icons/hi2';
 import {GrDocumentPdf} from 'react-icons/gr';
 import {BsFillPeopleFill} from 'react-icons/bs';
-import {BiSolidSend} from 'react-icons/bi';
+import {TfiReload} from 'react-icons/tfi';
 import {BsPersonFillAdd} from 'react-icons/bs';
 import {MdAddCircle} from 'react-icons/md';
 import UploadDoc from "./UploadDoc";
@@ -22,6 +22,16 @@ export default function Main() {
   const [isDocUploaded, setIsDocUploaded] = useState(false);
   const [showPDFViewer, setShowPDFViewer] = useState(false);
   const [downloadURL, setDownloadURL] = useState("");
+  const [isRotated, setIsRotated] = useState(false);
+
+  const handleRotation = () => {
+    setIsRotated(true);
+    setPatientDataChanged((prev) => !prev);
+
+    setTimeout(() => {
+      setIsRotated(false);
+    }, 800); 
+  };
 
   const openPDFViewer = () => {
     setShowPDFViewer(true);
@@ -39,27 +49,6 @@ export default function Main() {
     setPatientDataChanged((prev) => !prev);
   };
 
-  const handleSendButtonClick = async () => {
-    try {
-      // Send a POST request to your API route.
-      const response = await fetch('/api/send', {
-        method: 'POST',
-        body: JSON.stringify({
-          firstName: 'John',
-        })
-      })
-      .then(data => {
-        if (data.text) {
-          console.log("testing :",data.text);
-        } else {
-          console.error("Quiz data is missing or invalid.");
-        }
-      })
-    } catch (error) {
-      // Handle any unexpected errors that may occur during the request.
-      console.error('Error:', error);
-    }
-  };
 
   useEffect(() => {
     const getStudyData = async () => {
@@ -103,7 +92,6 @@ export default function Main() {
         <div className="mt-5 ">
         <div className="flex justify-between items-end py-2">
             <div className="text-2xl font-bold ml-3 flex gap-2 items-center"><GrDocumentPdf /><span className="mt-1 text-lg">Upload Document</span></div>
-            <div className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal  hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1" onClick={handleSendButtonClick}>Send <BiSolidSend/></div>
             </div>
             
             <div className="h-full w-full shadow-div mb-3 rounded-xl bg">
@@ -128,11 +116,18 @@ export default function Main() {
       <div className="w-3/5 pl-5">
       <div className="flex justify-between items-end py-2">
             <div className="text-2xl font-semibold ml-3 flex gap-2 items-center"><BsFillPeopleFill /><span className="mt-1 text-lg mb-1">Patients</span></div>
-            <div className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1" onClick={() => {setShowPatientForm(true)}}><BsPersonFillAdd/> New Patient </div>
-            </div>
+            <div className="flex gap-4">
+              <div className="text-2xl pt-1 font-bold">
+                <TfiReload className={`cursor-pointer ${isRotated ? 'rotate-360 active' : ''}`}onClick={handleRotation}/> 
+              </div>
+              <div className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1" onClick={() => {setShowPatientForm(true)}}><BsPersonFillAdd/> New Patient </div>
             
-            <div className="h-[81vh] w-full shadow-div rounded-xl bg">
-                <PatientsTable patientDataChanged={patientDataChanged}/>
+              </div>
+        </div>
+            
+            
+            <div className="h-[81vh] w-full shadow-div rounded-xl bg ">
+                <PatientsTable patientDataChanged={patientDataChanged} setPatientDataChanged={setPatientDataChanged}/>
             </div>
       </div>
     </div>

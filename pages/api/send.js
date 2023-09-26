@@ -7,15 +7,16 @@ export default async function handler(req, res) {
   try {
     const  patients  = req.body.patients;
     const authID  = req.body.authID;
+    const currentUrl = req.body.currentUrl;
 
     for (const patient of patients) {
       const { pid, email } = patient;
       
       const data = await resend.emails.send({
-        from: 'labh.k2003@gmail.com',
+        from: 'urgent <email@labhkreatives.me>',
         to: [email], 
-        subject: 'MR',
-        react: SendConsentEmail({ pid, authID }), 
+        subject: 'Sign',
+        react: SendConsentEmail({ pid, authID, currentUrl }), 
       });
 
       console.log(`Email sent for pid: ${pid},${authID} email: ${email}`);

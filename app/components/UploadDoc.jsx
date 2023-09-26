@@ -63,7 +63,6 @@ export default function UploadDoc() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref)
           .then((url) => {
-            console.log("File available at", url);
             setUploadComplete(true);
             setDownloadURL(url);
             setIsUploading(false);

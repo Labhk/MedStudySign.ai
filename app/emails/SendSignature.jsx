@@ -1,7 +1,7 @@
 import { Body, Button, Container, Head, Heading, Hr, Html, Img, Link, Preview, Text, } from '@react-email/components';
 import * as React from 'react';
   
-export const SendConsentEmail = ({pid, authID}) => (
+export const SendConsentEmail = ({pid, authID, currentUrl}) => (
     <Html>
         <Head />
         <Preview>Patient Consent Document for Research</Preview>
@@ -19,8 +19,8 @@ export const SendConsentEmail = ({pid, authID}) => (
             <Text style={paragraph}>
             We would like to express our gratitude for your willingness to participate in our research study. Your contribution is invaluable.
             </Text>
-            <Button pY={11} pX={23} style={button} href="">
-            View and Sign Consent Document {authID}--{pid}
+            <Button pY={11} pX={23} style={button} href={`${currentUrl}/Patients/${authID}--${pid}`}>
+            View and Sign Consent Document 
             </Button>
             <Text style={note}>
             Note: Our website provides a convenient feature to summarize the consent document for your ease of understanding. You can access this summary along with the full document on our website.
@@ -61,6 +61,7 @@ export default SendConsentEmail;
     fontWeight: '400',
     color: '#484848',
     padding: '17px 0 0',
+    fontFamily: '',
   };
   
   const paragraph = {

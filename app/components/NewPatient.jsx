@@ -1,48 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db, auth } from '../../firebase/config';
-import { onAuthStateChanged } from 'firebase/auth';
 
-export default function NewPatient({ showForm, setShowForm, onSubmit}) {
+export default function NewPatient({ showForm, setShowForm, onSubmit }) {
   const [email, setEmail] = useState('');
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [user, setUser] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onAuthStateChanged(auth, (user) => {
+  useEffect(() => {
+    // Add an auth state change listener to check if the user is authenticated
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        const uid = user.uid;
-        const currentDate = new Date().toLocaleDateString();
-        const signatureStatus = 'Not sent';
-
-        const newPatient = {
-          pid: `p${Math.floor(Math.random()*(999-100+1)+100)}`,
-          email: email,
-          currentDate: '-',
-          signatureStatus: signatureStatus,
-        };
-
-        updateDoc(doc(db, 'researchStudy', uid), {
-          patients: arrayUnion(newPatient),
-        })
-          .then(() => {
-            console.log('Patient data successfully added');
-            onSubmit();
-          })
-          .catch((error) => {
-            console.error('Error updating document: ', error);
-          });
+        setUser(user);
       } else {
-        console.log('User not signed in');
+        setUser(null);
       }
     });
 
+    return () => unsubscribe(); // Cleanup the listener when the component unmounts
+  }, []);
+
+  const handleSubmit = () => {
+    if (user) {
+      const uid = user.uid;
+      const currentDate = new Date().toLocaleDateString();
+      const signatureStatus = 'Not sent';
+
+      const newPatient = {
+        pid: `p${Math.floor(Math.random() * (999 - 100 + 1) + 100)}`,
+        email: email,
+        signedOn: '-',
+        signatureStatus: signatureStatus,
+      };
+
+      updateDoc(doc(db, 'researchStudy', uid), {
+        patients: arrayUnion(newPatient),
+      })
+        .then(() => {
+          console.log('Patient data successfully added');
+          onSubmit();
+        })
+        .catch((error) => {
+          console.error('Error updating document: ', error);
+        });
+    } else {
+      console.log('User not signed in');
+    }
+
     setEmail('');
     setShowForm(false);
+    setFormSubmitted(true); // Mark the form as submitted
   };
-
+  // Render the form only if showForm is true and the form has not been submitted
   return (
     <>
-      {showForm && (
+      {showForm && !formSubmitted && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="relative z-10 bg-white p-4 w-1/3  rounded-lg shadow-md">
@@ -53,7 +65,7 @@ export default function NewPatient({ showForm, setShowForm, onSubmit}) {
               &#x2715;
             </button>
             <div className="text-xl text-center font-semibold mb-6 mt-3">Add New Patient</div>
-            <form onSubmit={handleSubmit} className="text-sm mx-6">
+            <form  className="text-sm mx-6">
               <div className="mb-4">
                 <label className="block font-medium">Email:</label>
                 <input
@@ -67,8 +79,8 @@ export default function NewPatient({ showForm, setShowForm, onSubmit}) {
 
               <div className="text-center mb-3">
                 <button
-                  type="submit"
                   className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3"
+                  onClick={handleSubmit}
                 >
                   Add
                 </button>
