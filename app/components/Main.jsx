@@ -62,10 +62,8 @@ export default function Main() {
           setIsDocUploaded(true);
           setDownloadURL(downloadUrl);
         }
-        console.log("Document data:", studySnap.data().clinicName);
-        console.log("Document data:", studySnap.data().documentUrl);
+        
       } else {
-        // doc.data() will be undefined in this case
         console.log("No such document!");
       }
     };
