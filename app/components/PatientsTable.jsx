@@ -229,7 +229,6 @@ export default function PatientsTable({ patientDataChanged, setPatientDataChange
               <button className="rounded-lg text-sm font-medium py-1 px-3 hover:border-2  cursor-pointer shadow-md border-2 border-customDark bg-white text-customDark hover:border-gray-900 hover:bg-gray-900 hover:text-white " onClick={clearSelectedRows}>X</button>
             </div>
             <div className="">
-              <button className="rounded-lg text-sm font-medium py-1 px-3 hover:border-2 hover:border-customDark cursor-pointer shadow-md border-2 border-transparent bg-customDark text-white hover:text-customDark hover:bg-white  mr-2">Send Reminder</button>
               <button className="rounded-lg text-sm font-medium py-1 px-3 hover:border-2 hover:border-customDark cursor-pointer shadow-md border-2 border-transparent bg-customDark text-white hover:text-customDark hover:bg-white mr-1" onClick={handleSendSignatureDoc}>Send for Signature</button>
             </div>
           </div>
