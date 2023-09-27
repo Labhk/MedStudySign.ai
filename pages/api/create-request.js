@@ -65,12 +65,12 @@ export default async function handler(req, res) {
                 });
             } else {
                 console.error("No signatures found in the response.");
-                res.status(500).json({ error: "Internal Server Error" });
+                res.status(500).json({ error: "Internal Server Error first" });
             }
         }).catch((error) => {
             console.error("Exception when calling Dropbox Sign API (Signature Request):");
             console.error(error.body);
-            res.status(500).json({ error: "Internal Server Error" });
+            res.status(500).json({ error: "Internal Server Error second" });
         });
     } catch (error) {
         console.error('Error:', error);
