@@ -35,7 +35,7 @@ export default async function handler(req, res) {
             message: "Please review and sign the consent document.",
             signers: [signer],
             ccEmailAddresses: [senderEmail, signer.emailAddress],
-            file_urls: [fileUrl],
+            file_urls: ["https://firebasestorage.googleapis.com/v0/b/medstudysign.appspot.com/o/consent-forms%2Fclinical-reseach-guide-consent-template.pdf?alt=media&token=3b87a63b-0d4e-4619-be8b-147e769c1b80"],
             signingOptions,
             testMode: true,
         };
@@ -46,9 +46,7 @@ export default async function handler(req, res) {
             console.log(response.body.signatureRequest.signatureRequestId);
             const signatures = response.body.signatureRequest.signatures;
             if (signatures.length > 0) {
-                const signatureId = response.body.signatureRequest.signatures[0].signatureId; // Extract the signature_id from the first signature in the array
-
-                // Make the second API call to get the embedded sign URL
+                const signatureId = response.body.signatureRequest.signatures[0].signatureId; 
                 const embeddedResult = embeddedApi.embeddedSignUrl(signatureId);
                 embeddedResult.then((embeddedResponse) => {
                     console.log(embeddedResponse.body);
