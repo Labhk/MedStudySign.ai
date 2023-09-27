@@ -20,7 +20,8 @@ export default function NewPatient({ showForm, setShowForm, onSubmit }) {
     return () => unsubscribe(); // Cleanup the listener when the component unmounts
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (user) {
       const uid = user.uid;
       const currentDate = new Date().toLocaleDateString();
@@ -48,13 +49,12 @@ export default function NewPatient({ showForm, setShowForm, onSubmit }) {
     }
 
     setEmail('');
-    setShowForm(false);
-    setFormSubmitted(true); // Mark the form as submitted
+    setShowForm(false); 
   };
-  // Render the form only if showForm is true and the form has not been submitted
+  
   return (
     <>
-      {showForm && !formSubmitted && (
+      {showForm && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="relative z-10 bg-white p-4 w-1/3  rounded-lg shadow-md">
@@ -65,7 +65,7 @@ export default function NewPatient({ showForm, setShowForm, onSubmit }) {
               &#x2715;
             </button>
             <div className="text-xl text-center font-semibold mb-6 mt-3">Add New Patient</div>
-            <form  className="text-sm mx-6">
+            <form onSubmit={handleSubmit} className="text-sm mx-6">
               <div className="mb-4">
                 <label className="block font-medium">Email:</label>
                 <input
@@ -79,8 +79,9 @@ export default function NewPatient({ showForm, setShowForm, onSubmit }) {
 
               <div className="text-center mb-3">
                 <button
+                type='submit'
                   className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3"
-                  onClick={handleSubmit}
+                  
                 >
                   Add
                 </button>
