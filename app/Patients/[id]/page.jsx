@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '@/firebase/config';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useRouter } from "next/navigation";
+import axios from 'axios';
 
 // import HelloSign from 'hellosign-embedded';
 
@@ -12,8 +13,8 @@ export default function Patients({ params }) {
     const { id } = params;
     const [authID, pid] = id.split('--');
     const [study, setStudy] = useState([]);
-    const [fileUrl, setFileUrl] = useState("");
-    const [signerEmail, setSignerEmail] = useState("");
+    const [fileUrl, setFileUrl] = useState(null);
+    const [signerEmail, setSignerEmail] = useState(null);
     const [senderEmail, setSenderEmail] = useState("");
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -41,7 +42,7 @@ export default function Patients({ params }) {
                             ...patient,
                             signatureStatus: 'Signed',
                             signedOn: new Date().toLocaleDateString(),
-                            signatureRequestId: signData.signatureRequest.signatureRequestId,
+                            signatureRequestId: signData.signature_request.signature_request_id,
                         };
                     }
                     return patient;
@@ -92,49 +93,94 @@ export default function Patients({ params }) {
     }, []);
 
     useEffect(() => {
-        
         if (signerEmail && fileUrl) {
-            fetch("/api/create-request", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            const apiKey = process.env.NEXT_PUBLIC_DROPBOX_API_KEY;
+    
+            const requestBody = {
+                client_id: process.env.NEXT_PUBLIC_DROPBOX_CLIENT_ID,
+                file_urls: [fileUrl],
+                title: 'Consent Document for Patient',
+                subject: 'Review and Sign the Consent Document',
+                message: 'Please review and sign the consent document.',
+                signers: [
+                    {
+                        email_address: signerEmail,
+                        name: 'Patient',
+                        order: 0,
+                    },
+                ],
+                cc_email_addresses: [senderEmail,signerEmail],
+                signing_options: {
+                    draw: true,
+                    type: true,
+                    upload: true,
+                    phone: true,
+                    default_type: 'draw',
                 },
-                body: JSON.stringify({
-                    signerEmail: signerEmail,
-                    senderEmail: senderEmail,
-                    fileUrl: fileUrl,
-                }),
+                test_mode: 1,
+            };
+    
+            axios({
+                method: 'post',
+                url: 'https://api.hellosign.com/v3/signature_request/create_embedded',
+                auth: {
+                    username: apiKey,
+                    password: '',
+                },
+                data: requestBody,
             })
-            .then(response => response.json()) // Parse the response as JSON
-            .then(data => {
-                setSignData(data.signatureRequestResponse);
-                setEmbeddedData(data.embeddedSignUrlResponse);
-            
-            })
-            .catch(error => {
-                console.error("An error occurred:", error);
-            })
+                .then(response => {
+                    console.log('Success:', response.data);
+                    setSignData(response.data);
+                    console.log('Signature Request ID:', response.data.signature_request.signature_request_id)
+    
+                    const signatureId = response.data.signature_request.signatures[0].signature_id;
+    
+                    axios({
+                        method: 'get',
+                        url: `https://api.hellosign.com/v3/embedded/sign_url/${signatureId}`,
+                        auth: {
+                            username: apiKey,
+                            password: '',
+                        },
+                    })
+                        .then(embeddedResponse => {
+                            console.log('Embedded Sign URL:', embeddedResponse.data);
+                            setEmbeddedData(embeddedResponse.data);
+                            
+                        })
+                        .catch(embeddedError => {
+                            console.error('An error occurred while fetching the embedded sign URL:', embeddedError);
+                        });
+                })
+                .catch(error => {
+                    console.error('An error occurred:', error);
+                });
         }
     }, [signerEmail, fileUrl]);
     
+
+    
     useEffect(() => {
             if (signData && embeddedData) {
-                const { signatureRequestId, signatures } = signData.signatureRequest;
-                const { signUrl } = embeddedData.embedded;
-                setSignUrl(signUrl);
+                console.log('Sign Data1:', signData);
+                console.log('Embedded Data1:', embeddedData);
+                const { signature_request_id, signatures } = signData.signature_request;
+                const { sign_url } = embeddedData.embedded;
+                setSignUrl(sign_url);
                 const updatedPatients = study[0].patients.map(patient => {
                     if (patient.pid === pid) {
                         return {
                             ...patient,
-                            signatureRequestId: signatureRequestId,
-                            signatureId: signatures[0].signatureId,
-                            statusCode: signatures[0].statusCode,
+                            signatureRequestId: signature_request_id,
                         };
                     }
                     return patient;
                 });
                 
-
+                console.log("Auth ID", authID);
+                console.log("Updated Patients", updatedPatients);
+                console.log("Study", study[0]);
                 const updatedStudy = { ...study[0], patients: updatedPatients };
 
                 const docRef = doc(db, "researchStudy", authID);
