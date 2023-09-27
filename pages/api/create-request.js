@@ -16,7 +16,7 @@ const signingOptions = {
 
 export default async function handler(req, res) {
     try {
-        const { signerEmail } = req.body;
+        const { signerEmail } = "labh.k18@gmail.com";
         const { fileUrl } = req.body;
         const { senderEmail } = req.body;
         console.log(signerEmail);
