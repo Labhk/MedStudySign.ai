@@ -70,7 +70,7 @@ export default async function handler(req, res) {
         }).catch((error) => {
             console.error("Exception when calling Dropbox Sign API (Signature Request):");
             console.error(error.body);
-            res.status(500).json({ error: "Internal Server Error second" });
+            res.status(500).json({ error: error.body });
         });
     } catch (error) {
         console.error('Error:', error);
