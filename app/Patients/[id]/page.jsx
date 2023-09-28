@@ -109,7 +109,7 @@ export default function Patients({ params }) {
                         order: 0,
                     },
                 ],
-                cc_email_addresses: [senderEmail,signerEmail],
+                cc_email_addresses: [senderEmail],
                 signing_options: {
                     draw: true,
                     type: true,

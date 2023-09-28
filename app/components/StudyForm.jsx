@@ -59,7 +59,7 @@ export default function StudyForm({ showForm, setShowForm, onSubmit }) {
       {showForm && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="relative z-10 bg-white p-4 w-1/3  rounded-lg shadow-md">
+          <div className="relative z-10 bg-white p-4 w-full md:w-1/3  rounded-lg shadow-md">
             <button
               onClick={() => setShowForm(false)}
               className="absolute top-0 right-0 mt-1 mr-2 text-lg text-gray-500 hover:text-gray-800"
@@ -69,7 +69,7 @@ export default function StudyForm({ showForm, setShowForm, onSubmit }) {
             <div className="text-xl text-center font-semibold mb-6 mt-3">Research Study Form</div>
             <form onSubmit={handleSubmit} className="text-sm mx-6">
               <div className="mb-4">
-                <label className="block font-medium">Research Topic:</label>
+                <label className="block font-medium">esearch Topic:</label>
                 <input
                   type="text"
                   name="researchTopic"

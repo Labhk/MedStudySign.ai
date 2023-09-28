@@ -75,12 +75,12 @@ export default function Main() {
   return (
     
     <>
-    <div className="flex w-full px-5 mt-5  ">
-      <div className="w-2/5">
+    <div className="flex md:flex-row flex-col w-full px-5 mt-5  ">
+      <div className="md:w-2/5">
         <div className="flex flex-col">
             <div className="flex justify-between items-end py-2">
-            <div className="text-2xl font-semibold ml-3 flex gap-1 justify-center items-center"><HiDocumentText /><span className="mt-1 text-lg">Research Study</span></div>
-            <div className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1" onClick={() => {setShowStudyForm(true)}}><MdAddCircle/>New Study </div>
+            <div className="md:text-2xl text-lg font-semibold ml-3 flex gap-1 justify-center items-center"><HiDocumentText /><span className="mt-1 text-[0.85rem] md:text-lg">Research Study</span></div>
+            <div className="text-[0.75rem] md:text-[1rem] rounded-lg px-3 md:px-4 pb-2 py-1 md:py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1" onClick={() => {setShowStudyForm(true)}}><MdAddCircle/>New Study </div>
             </div>
             
             <div className="h-full w-full  shadow-div rounded-xl bg ">
@@ -89,7 +89,7 @@ export default function Main() {
         </div>
         <div className="mt-5 ">
         <div className="flex justify-between items-end py-2">
-            <div className="text-2xl font-bold ml-3 flex gap-2 items-center"><GrDocumentPdf /><span className="mt-1 text-lg">Upload Document</span></div>
+            <div className="md:text-2xl text-lg font-bold ml-3 flex gap-2 items-center"><GrDocumentPdf /><span className="mt-1 text-[0.85rem] md:text-lg">Upload Document</span></div>
             </div>
             
             <div className="h-full w-full shadow-div mb-3 rounded-xl bg">
@@ -111,7 +111,7 @@ export default function Main() {
         </div>
       </div>
 
-      <div className="w-3/5 pl-5">
+      <div className="md:w-3/5  pl-5">
       <div className="flex justify-between items-end py-2">
             <div className="text-2xl font-semibold ml-3 flex gap-2 items-center"><BsFillPeopleFill /><span className="mt-1 text-lg mb-1">Patients</span></div>
             <div className="flex gap-4">

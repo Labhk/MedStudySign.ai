@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { auth } from '../../firebase/config';
 import { onAuthStateChanged } from 'firebase/auth';
+import {BiLogOut} from 'react-icons/bi'
 
 export default function Header({ setLoggedIn }) {
     const [user, setUser] = useState(null);
@@ -31,14 +32,14 @@ export default function Header({ setLoggedIn }) {
     };
 
     return (
-        <header className="flex justify-between items-center px-4 py-2 rounded-2xl shadow border-gray-200">
+        <header className="flex justify-between items-center px-2 md:px-4 py-2 rounded-2xl shadow border-gray-200">
         <div className="flex items-center">
             <img
             src="/signature1.gif"
             alt="Signature"
-            className="h-13 w-14 mx-auto"
+            className="h-11 w-10 md:h-14 md:w-14 mx-auto"
             />
-            <div className="text-xl font-bold text-gray-800 tracking-wide ml-2">
+            <div className="text-sm md:text-xl font-bold text-gray-800 tracking-wide ml-1 md:ml-2">
             MedStudySign<span className="text-customTeal">.ai</span>
             </div>
         </div>
@@ -59,10 +60,12 @@ export default function Header({ setLoggedIn }) {
                 onClick={handleSignOut}
                 className="w-full bg-customTeal font-medium text-white px-4 py-1 rounded-md hover:bg-white hover:border hover:border-customTeal  hover:text-customTeal"
                 >
-                Logout
+                    <div className="md:block hidden">Logout</div>
+                <div className="md:hidden block my-2"><BiLogOut/></div>
+                
                 </button>
             </div>
-            <div className="ml-2 cursor-pointer text-sm">
+            <div className="ml-2 cursor-pointer text-sm hidden md:block">
                 <p>{user.displayName}</p>
                 <p>{user.email}</p>
             </div>
