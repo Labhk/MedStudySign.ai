@@ -44,7 +44,7 @@ export default function ResearchStudy({studyDataChanged}) {
       ) : (
         study.length > 0 ? ( 
           <>
-            <div className="text-[0.9rem] md:text-base font-semibold tracking-wide mb-2">{study[0].topic}</div>
+            <div className="text-[0.9rem] leading-4 md:text-base md:leading-[1.25rem] font-semibold tracking-wide mb-2">{study[0].topic}</div>
             <div className="flex justify-between items-center">
               <div className="text-[0.75rem] md:text-sm text-gray-500 flex gap-2 justify-center items-center"><FaClinicMedical /><span className="mt-1">{study[0].clinicName}</span></div>
               <div className="text-[0.75rem] md:text-sm text-gray-800">{`Duration: ${study[0].Duration} months`}</div>

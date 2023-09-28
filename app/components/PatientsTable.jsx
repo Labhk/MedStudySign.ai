@@ -179,16 +179,16 @@ export default function PatientsTable({ patientDataChanged, setPatientDataChange
           </div>
         ) : patients && patients.length > 0 ? (
           <>
-          <div className="w-full h-full overflow-y-auto">
+          <div className="w-full h-full overflow-y-auto overflow-x-auto">
             <div className="pb-16">
             <table className="w-full  rounded-xl ">
             <thead>
               <tr className="bg-gray-950 text-white">
-                <th className="py-3 px-4 rounded-tl-xl border-r border-b text-sm border-gray-300"></th>
-                <th className="py-3 px-4 border text-base border-gray-300 w-[37%]">Email</th>
-                <th className="py-3 px-4 border text-base border-gray-300">Signed On</th>
-                <th className="py-3 px-4 border text-base border-gray-300">Signature Status</th>
-                <th className="rounded-tr-xl py-3 px-4 border-l border-b text-base border-gray-300">Preview</th>
+                <th className="md:py-3 py-2 md:px-4 px-3 rounded-tl-xl border-r border-b border-gray-300"></th>
+                <th className="md:py-3 py-2 md:px-4 px-3 border text-sm md:text-base border-gray-300 w-[37%]">Email</th>
+                <th className="md:py-3 py-2 md:px-4 px-3 border text-xs md:text-base border-gray-300 ">Signed On</th>
+                <th className="md:py-3 py-2 md:px-4 px-3 border text-xs md:text-base border-gray-300">Signature Status</th>
+                <th className="rounded-tr-xl py-3 px-4 border-l border-b text-xs md:text-base border-gray-300">Preview</th>
               </tr>
             </thead>
             <tbody className="">
@@ -204,12 +204,12 @@ export default function PatientsTable({ patientDataChanged, setPatientDataChange
                   />
                 </div>
               </td>
-              <td className="py-2 px-4 border text-base border-gray-300">{patient.email}</td>
-              <td className="py-2 px-4 border text-base border-gray-300 text-center">{patient.signedOn}</td>
-              <td className='rounded-br-sm py-2 px-4 border text-[0.8rem] text-center '>
-                    <button className={`w-fit rounded-full py-2 px-3 font-semibold ${getStatusButtonStyle(patient.signatureStatus)}`} >{patient.signatureStatus}</button>
+              <td className="py-1 md:py-2 px-4 border text-xs md:text-base border-gray-300">{patient.email}</td>
+              <td className="py-1 md:py-2 px-4 border text-xs md:text-base border-gray-300 text-center">{patient.signedOn}</td>
+              <td className='rounded-br-sm md:py-2 py-1 md:px-4 px-1 border text-[0.6rem] md:text-sm text-center '>
+                    <button className={`w-fit rounded-full py-1 md:py-2 px-3 font-semibold ${getStatusButtonStyle(patient.signatureStatus)}`} >{patient.signatureStatus}</button>
                   </td>
-              <td className='rounded-br-sm py-2 px-4 border text-[0.8rem] text-center'>
+              <td className='rounded-br-sm py-1 md:py-2 px-4 border text-xs md:text-base text-center'>
                 {patient.signatureStatus === 'Signed' ? (
                   <DownloadPreview signReqId={patient.signatureRequestId} />
                 ) : (
@@ -225,11 +225,11 @@ export default function PatientsTable({ patientDataChanged, setPatientDataChange
           
             <div className="text-sm absolute bottom-0 rounded-xl w-full p-2 flex justify-between bg">
             <div className="">
-              <button className="rounded-lg text-sm font-medium py-1 px-3 hover:border-2 hover:border-customDark cursor-pointer shadow-md border-2 border-transparent bg-customDark text-white hover:text-customDark hover:bg-white  mr-1" onClick={selectAllRows}>Select All</button>
-              <button className="rounded-lg text-sm font-medium py-1 px-3 hover:border-2  cursor-pointer shadow-md border-2 border-customDark bg-white text-customDark hover:border-gray-900 hover:bg-gray-900 hover:text-white " onClick={clearSelectedRows}>X</button>
+              <button className="rounded-lg text-[0.7rem] md:text-sm font-medium md:py-1 px-1  md:px-3 hover:border-2 hover:border-customDark cursor-pointer shadow-md border-2 border-transparent bg-customDark text-white hover:text-customDark hover:bg-white  mr-1" onClick={selectAllRows}>Select All</button>
+              <button className="rounded-lg text-[0.7rem] md:text-sm font-medium md:py-1 px-2  md:px-3 hover:border-2  cursor-pointer shadow-md border-2 border-customDark bg-white text-customDark hover:border-gray-900 hover:bg-gray-900 hover:text-white " onClick={clearSelectedRows}>X</button>
             </div>
             <div className="">
-              <button className="rounded-lg text-sm font-medium py-1 px-3 hover:border-2 hover:border-customDark cursor-pointer shadow-md border-2 border-transparent bg-customDark text-white hover:text-customDark hover:bg-white mr-1" onClick={handleSendSignatureDoc}>Send for Signature</button>
+              <button className="rounded-lg text-[0.7rem] md:text-sm font-medium md:py-1 px-2  md:px-3  hover:border-2 hover:border-customDark cursor-pointer shadow-md border-2 border-transparent bg-customDark text-white hover:text-customDark hover:bg-white mr-1" onClick={handleSendSignatureDoc}>Send for Signature</button>
             </div>
           </div>
 
@@ -239,7 +239,7 @@ export default function PatientsTable({ patientDataChanged, setPatientDataChange
           
           </>
         ) : (
-          <div className="flex flex-col justify-center items-center text-center text-lg font-medium h-full w-full p-32 opacity-30">
+          <div className="flex flex-col justify-center items-center text-center text-lg font-medium h-full w-full  py-32 md:px-32 md:py-32 opacity-30">
           <div className=""><img src="https://i.ibb.co/0hW3gXS/forbidden.png" className="h-28 " alt="x" /></div>
           <div className="mt-3 text-gray-800 text-2xl">No Patients Added</div>
         </div>

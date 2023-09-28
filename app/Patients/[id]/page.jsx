@@ -199,24 +199,24 @@ export default function Patients({ params }) {
     return (
         <>
             <div className="home-bg">
-                <header className="flex justify-between items-center px-4 py-2 rounded-2xl shadow border-gray-200">
+                <header className="flex justify-between items-center px-2 md:px-4 py-2 rounded-2xl shadow border-gray-200">
                     <div className="flex items-center">
                         <img
                             src="/signature1.gif"
                             alt="Signature"
-                            className="h-13 w-14 mx-auto"
+                            className="h-11 w-10 md:h-14 md:w-14 mx-auto"
                         />
-                        <div className="text-xl font-bold text-gray-800 tracking-wide ml-2">
+                        <div className="text-sm md:text-xl font-bold text-gray-800 tracking-wide ml-1 md:ml-2">
                             MedStudySign<span className="text-customTeal">.ai</span>
                         </div>
                     </div>
-                    <div className="text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-3 flex gap-1" onClick={handleSignature}>
-                        <span className="text-2xl mr-1"><FaDropbox/></span> Sign Document 
+                    <div className="text-[0.78rem] md:text-[1rem] rounded-lg px-4 py-2 hover:shadow-none hover:bg-white hover:border hover:border-customTeal hover:text-customTeal cursor-pointer shadow-button bg-customDark text-white font-semibold mr-0 md:mr-3 flex gap-1" onClick={handleSignature}>
+                        <span className="text-xl md:text-2xl mr-1"><FaDropbox/></span> Sign Document 
                     </div>
                     
                 </header>
                 <div className="min-h-screen  ">
-                    <div className='flex mb-3'>
+                    <div className='flex mb-3 mt-4 md:mt-0'>
                         <button
                             onClick={() => toggleTab('consent')}
                             className={`w-full py-2 ${activeTab === 'consent' ? ' font-medium py-1 px-3 k cursor-pointer shadow-md border-2 border-transparent bg-customDark text-white ' : 'text-customDark bg-white border-2 border-customDark'}`}

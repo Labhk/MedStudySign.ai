@@ -112,12 +112,12 @@ export default function UploadDoc() {
       {uploadComplete ? (
         <>
         <div className="py-10 flex flex-col justify-center items-center">
-        <div className="text-lg font-medium">
+        <div className="text-base md:text-lg font-medium">
           <span className="text-gray-800  text-base underline">{file.name}</span>  
           </div>
-          <div className="text-xl mb-2">Successfully Uploaded!!</div>
+          <div className="text-lg md:text-xl mb-2">Successfully Uploaded!!</div>
           <button
-            className="text-base py-1 px-3 ml-2 cursor-pointer shadow-md border-2 border-customDark bg-customDark text-white hover:border-gray-900 hover:bg-gray-900 hover:text-white rounded-xl"
+            className="text-sm md:text-base py-1 px-3 ml-2 cursor-pointer shadow-md border-2 border-customDark bg-customDark text-white hover:border-gray-900 hover:bg-gray-900 hover:text-white rounded-xl"
             onClick={() => openPDFViewer()}
           >
             View
@@ -131,16 +131,16 @@ export default function UploadDoc() {
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`py-10 flex flex-col justify-center items-center  border-dashed border-gray-300 hover:border-customDark border-4 rounded-xl font-medium text-gray-400 ${
+          className={`py-10 flex flex-col justify-center items-center  border-dashed border-gray-300 hover:border-customDark border-[3px] md:border-4 rounded-xl font-medium text-gray-400 ${
             dragOver ? "bg-customDark opacity-8 border-none" : ""
           }`}
         >
           {!file && (
             <div className="flex flex-col items-center">
-              <div className="text-xl mb-2">
+              <div className="text-lg md:text-xl mb-2">
                 {dragOver ? <span className="text-white">Drop Here</span> : "Drag & Drop PDF File"}
               </div>
-              <div className="text-base font-normal mb-2">OR</div>
+              <div className="text-sm md:text-base font-normal mb-2">OR</div>
               <input
                 type="file"
                 onChange={handleChange}
@@ -149,7 +149,7 @@ export default function UploadDoc() {
                 ref={inputRef}
               />
               <button
-                className="text-base py-1 px-3 hover:border-2 cursor-pointer shadow-md border-none bg-customDark text-white hover:border-customDark hover:text-customDark hover:bg-white rounded-xl"
+                className="text-sm md:text-base py-1 px-3 hover:border-2 cursor-pointer shadow-md border-none bg-customDark text-white hover:border-customDark hover:text-customDark hover:bg-white rounded-xl"
                 onClick={handleSelectFile}
               >
                 Select PDF File
@@ -158,22 +158,22 @@ export default function UploadDoc() {
           )}
           {file && (
             <div className="flex flex-col px-6 items-center">
-              <div className="text-lg mb-2 flex justify-center gap-2 text-center">
+              <div className="text-base md:text-lg mb-2 flex justify-center gap-2 text-center">
                 File Selected:{" "}
-                <span className="text-gray-800 underline text-base">
+                <span className="text-gray-800 underline text-sm md:text-base">
                   {file.name}
                 </span>
               </div>
               <div className="flex">
               <button
-                className="text-base py-1 px-3 cursor-pointer shadow-md border-none rounded-xl mr-2 border-2 border-customDark bg-customDark text-white hover:border-gray-900 hover:bg-gray-900 hover:text-white"
+                className="text-sm md:text-base py-1 px-3 cursor-pointer shadow-md border-none rounded-xl mr-2 border-2 border-customDark bg-customDark text-white hover:border-gray-900 hover:bg-gray-900 hover:text-white"
                 onClick={uploadDoc}
                 disabled={isUploading} 
               >
                   {isUploading ? "Uploading..." : "Upload"} 
               </button>
                 <button
-                  className="text-base py-1 px-3 hover:border-2 cursor-pointer shadow-md border-2 border-customDark bg-white text-customDark hover:border-gray-900 hover:bg-gray-900 hover:text-white  rounded-xl"
+                  className="text-sm md:text-base py-1 px-3 hover:border-2 cursor-pointer shadow-md border-2 border-customDark bg-white text-customDark hover:border-gray-900 hover:bg-gray-900 hover:text-white  rounded-xl"
                   onClick={handleCancel}
                 >
                   Cancel
