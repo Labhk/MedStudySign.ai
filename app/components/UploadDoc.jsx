@@ -1,9 +1,12 @@
-import { useState, useRef } from "react";
+
+import { useState, useRef, useEffect } from "react";
 import { storage } from "../../firebase/config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import PDFViewer from "./PDFViewer";
 import { doc, updateDoc  } from "firebase/firestore";
 import { db } from '../../firebase/config';
+import { extractTextFromPdf } from "./pdfTextExtraction";
+
 
 export default function UploadDoc() {
   const [file, setFile] = useState(null);
@@ -13,6 +16,8 @@ export default function UploadDoc() {
   const [uploadComplete, setUploadComplete] = useState(false);
   const [downloadURL, setDownloadURL] = useState("");
   const [showPDFViewer, setShowPDFViewer] = useState(false);
+  const [pdfContent, setPdfContent] = useState("");
+  const [summary, setSummary] = useState("");
 
   const openPDFViewer = () => {
     setShowPDFViewer(true);
@@ -22,11 +27,52 @@ export default function UploadDoc() {
     setShowPDFViewer(false);
   };
 
-  const handleChange = (event) => {
+  const handleSummarize = () => {
+    const api_key = process.env.NEXT_PUBLIC_OPENAI_API_KEY
+
+    fetch('/api/summarizer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        extractedText: pdfContent,
+        api_key: api_key
+      }),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch summary data");
+        }
+        return response.json();
+      })
+      .then(data => {
+        setSummary(data.text);
+      })
+      .catch(error => {
+        console.error("An error occurred:", error);
+      })
+  }
+
+  const handleChange = async (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile && selectedFile.type === "application/pdf") {
       setFile(selectedFile);
       setDragOver(false);
+
+      const blob = new Blob([selectedFile], { type: "application/pdf" });
+
+      try {
+        const textArray = await extractTextFromPdf(blob);
+
+        // Join the extracted text from all pages into a single string
+        const extractedText = textArray.join(" ");
+        setPdfContent(extractedText);
+      } catch (error) {
+        console.error("Error extracting PDF text:", error);
+        setPdfContent("Error extracting PDF text");
+      }
+
     } else {
       alert("Please select a PDF file.");
       event.target.value = null;
@@ -36,6 +82,16 @@ export default function UploadDoc() {
   const handleSelectFile = () => {
     inputRef.current.click();
   };
+
+  useEffect(() => {
+    if (summary) {
+      const uid = localStorage.getItem("authID");
+      const uploadDocRef = doc(db, "researchStudy", uid);
+      updateDoc(uploadDocRef, {
+        summary: summary
+      });
+    }
+  }, [summary]);
 
   const uploadDoc = () => {
     if (!file) {
@@ -66,6 +122,7 @@ export default function UploadDoc() {
             setUploadComplete(true);
             setDownloadURL(url);
             setIsUploading(false);
+            handleSummarize();
             const uid = localStorage.getItem("authID");
             const uploadDocRef = doc(db, "researchStudy", uid);
             updateDoc(uploadDocRef, {
@@ -95,17 +152,32 @@ export default function UploadDoc() {
     setDragOver(false);
   };
 
-  const handleDrop = (event) => {
+  const handleDrop = async (event) => {
     event.preventDefault();
     setDragOver(false);
     const droppedFile = event.dataTransfer.files[0];
-
+  
     if (droppedFile && droppedFile.type === "application/pdf") {
       setFile(droppedFile);
+  
+      const blob = new Blob([droppedFile], { type: "application/pdf" });
+  
+      try {
+        const textArray = await extractTextFromPdf(blob);
+  
+        // Join the extracted text from all pages into a single string
+        const extractedText = textArray.join(" ");
+        setPdfContent(extractedText);
+        console.log("Extracted PDF text:", extractedText);
+      } catch (error) {
+        console.error("Error extracting PDF text:", error);
+        setPdfContent("Error extracting PDF text");
+      }
     } else {
       alert("Please drop a PDF file.");
     }
   };
+  
 
   return (
     <>

@@ -22,6 +22,7 @@ export default function Patients({ params }) {
     const [embeddedData, setEmbeddedData] = useState(null);
     const [signUrl, setSignUrl] = useState(null);
     const [activeTab, setActiveTab] = useState('consent');
+    const [summary, setSummary] = useState(null);
   
     const handleSignature = () => {
         import("hellosign-embedded").then(({default: HelloSign}) => {
@@ -71,6 +72,7 @@ export default function Patients({ params }) {
             const studyData = docSnap.data();
             setStudy([studyData]);
             setFileUrl(studyData.documentUrl); 
+            createSummaryArray(studyData.summary)
             setSenderEmail(studyData.email);
             setLoading(false);
             
@@ -159,8 +161,12 @@ export default function Patients({ params }) {
         }
     }, [signerEmail, fileUrl]);
     
+    const createSummaryArray = (summary) => {
+        const summary1 = summary.replaceAll('Dr.', 'Dr');
+        const summaryArray = summary1.split('.');
+        setSummary(summaryArray); 
+    }
 
-    
     useEffect(() => {
             if (signData && embeddedData) {
                 console.log('Sign Data1:', signData);
@@ -194,6 +200,8 @@ export default function Patients({ params }) {
     const toggleTab = (tabName) => {
         setActiveTab(tabName);
     };
+
+
 
 
     return (
@@ -254,7 +262,19 @@ export default function Patients({ params }) {
 
                     {activeTab === 'summary' && (
                         <div>
-                            <h2>View Summary</h2>
+                            {loading ? (
+                            <div className="flex flex-col justify-center items-center text-center py-10 text-lg font-medium ">
+                                <div className=""><img src="/spin.gif" className="h-14"  alt="x" /></div>
+                            </div>
+                            ) : (
+                                <ul className="list-outside list-square rounded-xl mx-3 my-2  md:mx-4 md:my-4 border-2 border-customDark bg-white md:px-44 px-10 py-4 md:py-8 text-justify text-sm md:text-xl text-customDark">
+                                {summary.slice(0, -1).map((item, index) => (
+                                    <li key={index} className="mb-2 md:mb-4 text-black">{item}.</li>
+                                ))}
+                                </ul>
+
+
+                            )}
                         </div>
                     )}
                 </div>
