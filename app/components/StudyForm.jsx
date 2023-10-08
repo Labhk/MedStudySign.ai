@@ -32,7 +32,7 @@ export default function StudyForm({ showForm, setShowForm, onSubmit }) {
           email: user.email,
         })
           .then(() => {
-            console.log("Document created successfully");
+            console.log("Research created successfully");
             onSubmit();
           })
           .catch((error) => {

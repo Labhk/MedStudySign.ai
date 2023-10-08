@@ -132,10 +132,8 @@ export default function Patients({ params }) {
                 data: requestBody,
             })
                 .then(response => {
-                    console.log('Success:', response.data);
                     setSignData(response.data);
-                    console.log('Signature Request ID:', response.data.signature_request.signature_request_id)
-    
+ 
                     const signatureId = response.data.signature_request.signatures[0].signature_id;
     
                     axios({
@@ -147,7 +145,6 @@ export default function Patients({ params }) {
                         },
                     })
                         .then(embeddedResponse => {
-                            console.log('Embedded Sign URL:', embeddedResponse.data);
                             setEmbeddedData(embeddedResponse.data);
                             
                         })
@@ -169,8 +166,6 @@ export default function Patients({ params }) {
 
     useEffect(() => {
             if (signData && embeddedData) {
-                console.log('Sign Data1:', signData);
-                console.log('Embedded Data1:', embeddedData);
                 const { signature_request_id, signatures } = signData.signature_request;
                 const { sign_url } = embeddedData.embedded;
                 setSignUrl(sign_url);
@@ -184,9 +179,6 @@ export default function Patients({ params }) {
                     return patient;
                 });
                 
-                console.log("Auth ID", authID);
-                console.log("Updated Patients", updatedPatients);
-                console.log("Study", study[0]);
                 const updatedStudy = { ...study[0], patients: updatedPatients };
 
                 const docRef = doc(db, "researchStudy", authID);

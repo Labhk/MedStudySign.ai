@@ -168,7 +168,6 @@ export default function UploadDoc() {
         // Join the extracted text from all pages into a single string
         const extractedText = textArray.join(" ");
         setPdfContent(extractedText);
-        console.log("Extracted PDF text:", extractedText);
       } catch (error) {
         console.error("Error extracting PDF text:", error);
         setPdfContent("Error extracting PDF text");
