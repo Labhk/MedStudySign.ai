@@ -1,11 +1,35 @@
-# MedStudySign.ai
+### Inspiration
+Clinical research holds immense significance in the United States, propelling scientific advancements that enhance the field of medicine. There is substantial financial investment into medical studies with over 40 billion dollars spent every year in the United States ([Lauer 2023](https://nexus.od.nih.gov/all/2023/03/01/fy-2022-by-the-numbers-extramural-grant-investments-in-research/)). 
 
-In order for patients to enroll in a study, they must sign a consent form ([source](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3601699/#:~:text=For%20a%20valid%20consent%2C%20information,benefits%20associated%20with%20research%20participation)). The plan is for clinicians to upload a patient consent document, and we use the Dropbox API to get that document signed by a patient. We also utilize a Language Model (LLM) to summarize the document.
+The first step of every clinical study involves having a patient sign a consent form that outlines the risks, benefits, and involvement of the study. Consenting patients is time consuming and often involves physical pen and paper in order to get a patient signature. The patient enrollment process is so burdensome that 19% of clinical studies face premature termination ([Carlisle 2015](https://europepmc.org/article/MED/25475878)) and 76% attributed the study failure to inadequate patient enrollment ([Briel 2016](https://www.jclinepi.com/article/S0895-4356(16)30278-5/fulltext)).  An innovation that simplifies patient enrollment will save valuable clinician time, enhance study completion, and advance scientific innovation.
 
-**User Story:**
-- Clinician signs into the website and starts a research study.
-- Clinician can upload a document for the patient to sign.
-- Clinician enters the email address(es) of the patient(s).
-- Dropbox API is used for patient signatures.
-- Language Model (LLM) is used to summarize the consent form for the patient.
-- The patient signs the document, and the clinician is notified.
+Our proposal, **MedStudySign.ai**, introduces a platform for clinicians to recruit patients and secure consent from patients. Through this web-based application, clinicians can upload study consent documents, which are then promptly emailed to eligible patients. We use the [Dropbox Sign API](https://www.hellosign.com/products/dropbox-sign-api?_tk=paid_sem_goog_biz_b&_camp=20036280710&_kw=dropbox%20sign%20api|e&_ad=656686723083||c&gclid=Cj0KCQjwmvSoBhDOARIsAK6aV7jfJsIosnmfoJlM5zAhSAyYSia-SJv4dboQSn0WERLg6e_19VqoeVQaAg2cEALw_wcB) to facilitate seamless electronic signatures from patients. Additionally, the platform offers an intuitive dashboard for clinicians to monitor and manage the consent process by tracking signed and received consent forms. MedStudySign.ai also simplifies consent forms using advanced language models to summarize them in plain English for patient education. In summary, **MedStudySign.ai** digitizes the medical study consent form process which leads to time savings for researchers and improved patient enrollment.
+
+### What it does
+**MedStudySign.ai** simplifies the patient recruitment and consent process for clinical studies. Clinicians can easily upload study consent documents that are sent to patients via email. The platform utilizes the [Dropbox Sign API](https://www.hellosign.com/products/dropbox-sign-api?_tk=paid_sem_goog_biz_b&_camp=20036280710&_kw=dropbox%20sign%20api|e&_ad=656686723083||c&gclid=Cj0KCQjwmvSoBhDOARIsAK6aV7jfJsIosnmfoJlM5zAhSAyYSia-SJv4dboQSn0WERLg6e_19VqoeVQaAg2cEALw_wcB) to get electronic consent signatures from patients. Moreover, it provides an intuitive user interface and an dashboard for clinicians to manage the consent process, keeping track of patients who have signed and received the consent form. The platform also includes the option for clinicians to show and AI generated summary of the consent from that explains study details in language that patients can better understand.
+
+### How we built it
+The the application was developed with Next.js & Tailwind CSS.  The backend utilizes Google's Firebase for authorization and document storage and retrivial. The [Dropbox Sign API](https://www.hellosign.com/products/dropbox-sign-api?_tk=paid_sem_goog_biz_b&_camp=20036280710&_kw=dropbox%20sign%20api|e&_ad=656686723083||c&gclid=Cj0KCQjwmvSoBhDOARIsAK6aV7jfJsIosnmfoJlM5zAhSAyYSia-SJv4dboQSn0WERLg6e_19VqoeVQaAg2cEALw_wcB) was used to manage send and recieve electronic signatures.  In order to generate the patient friendly AI summary of the consent form, we experimented with open source models large language models. We ended up utilizing the Openai API due to easy and reliable integration.  
+
+The user interface was designed to be intuitive. We want to digitize the consent process away for pen and paper so allowing clinicians to navigate and manage the consent process had to be simple.  We also designed the patient interface as clear as possible as any additional steps here would likely lead to decreased patient enrollment.  With our goal being to maximize the number of patients who sign the consent form and enroll in the study, it was extremely important for the app to be easy to use.
+
+### Challenges we ran into
+Building **MedStudySign.ai** presented several significant challenges. Seamless and secure integration of the [Dropbox Sign API](https://www.hellosign.com/products/dropbox-sign-api?_tk=paid_sem_goog_biz_b&_camp=20036280710&_kw=dropbox%20sign%20api|e&_ad=656686723083||c&gclid=Cj0KCQjwmvSoBhDOARIsAK6aV7jfJsIosnmfoJlM5zAhSAyYSia-SJv4dboQSn0WERLg6e_19VqoeVQaAg2cEALw_wcB) learning a new API interface and functionality. Accurately summarizing consent forms using large language models while preserving essential information was challenging, but we were able to overcome with trail and error in prompt engineering. Additionally, ensuring the platform's compliance with healthcare regulations and data privacy standards remained a paramount concern throughout the development process.  We ensure all protected health information (PHI) is encrypted on the infrastructure in which we store it.
+
+### Accomplishments that we're proud of
+We have a working app!! ([MedStudySign.ai](https://main.d3mqfaen5l53lz.amplifyapp.com/))  It's been tested and validated, and we're ready to find clinicians willing to be beta testers. We're pleased with the intuitive user interface and Dropbox API integration that seamlessly connects our application.  Improving the patient recruitment and consent process is an accomplishment that has a positive impact on the field of medicine.  We're proud to have crafted a tool that achieves this.
+
+### What we learned
+The development of **MedStudySign.ai** provided insights into the intricate workings of the clinical research process and the challenges faced by clinicians during patient recruitment. We deepened our understanding of leveraging APIs for secure document handling and explored the potential of language models to enhance communication within healthcare contexts.
+
+### What's next for MedStudySign.ai
+Looking ahead, we would love to find clinical researchers to beta test our application.  We think our app has the minimum needed features to give value to researchers, but would love establish a loop where we could iterate our development based on real-time feedback. 
+
+We also envision expanding **MedStudySign.ai** to with additional features. Real-time notifications to clinicians upon patient consent could significantly enhance the efficiency of the recruitment process. Integration with electronic health record (EHR) systems could streamline patient eligibility verification, making the platform even more user-friendly and time-saving for clinicians. Moreover, forging partnerships with research institutions and healthcare organizations to tailor the platform to specific research needs is on our roadmap, ultimately contributing to a more efficient and impactful clinical research landscape.
+
+### Citations
+Briel, Matthias, Kelechi Kalu Olu, Erik Von Elm, Benjamin Kasenda, Reem Alturki, Arnav Agarwal, Neera Bhatnagar, and Stefan Schandelmaier. "A systematic review of discontinued trials suggested that most reasons for recruitment failure were preventable." Journal of clinical epidemiology 80 (2016): 8-15.
+
+Carlisle, Benjamin, Jonathan Kimmelman, Tim Ramsay, and Nathalie MacKinnon. "Unsuccessful trial accrual and human subjects protections: an empirical analysis of recently closed trials." Clinical trials 12, no. 1 (2015): 77-83.
+
+Lauer, Mike. "“FY 2022 by the Numbers: Extramural Grant Investments in Research." (2023).
