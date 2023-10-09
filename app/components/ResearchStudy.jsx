@@ -60,7 +60,7 @@ export default function ResearchStudy({studyDataChanged}) {
         ) : (
           <div className="flex flex-col justify-center items-center text-center py-10 text-base md:text-lg font-medium opacity-30">
             <div className=""><img src="https://i.ibb.co/0hW3gXS/forbidden.png" className="h-16 md:h-20 " alt="x" /></div>
-            <div className="mt-3 text-gray-800">No Study Created</div>
+            <div className="mt-3 text-gray-800">No-Study-Created </div>
           </div>
         )
       )}
