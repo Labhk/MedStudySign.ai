@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
 import { db, auth } from '../../firebase/config';
 
 export default function NewPatient({ showForm, setShowForm, onSubmit }) {
@@ -17,11 +17,21 @@ export default function NewPatient({ showForm, setShowForm, onSubmit }) {
       }
     });
 
-    return () => unsubscribe(); // Cleanup the listener when the component unmounts
+    return () => unsubscribe();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const uid = localStorage.getItem("authID");
+    const studyRef = doc(db, "researchStudy", uid);
+    const studySnap = await getDoc(studyRef);
+
+    if(!studySnap.exists()){
+      alert("Please create a research study first");
+      console.log("No such document!");
+      return;
+    }
+
     if (user) {
       const uid = user.uid;
       const currentDate = new Date().toLocaleDateString();

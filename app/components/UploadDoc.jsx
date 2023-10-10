@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { storage } from "../../firebase/config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import PDFViewer from "./PDFViewer";
-import { doc, updateDoc  } from "firebase/firestore";
+import { doc, updateDoc, getDoc  } from "firebase/firestore";
 import { db } from '../../firebase/config';
 import { extractTextFromPdf } from "./pdfTextExtraction";
 
@@ -93,9 +93,18 @@ export default function UploadDoc() {
     }
   }, [summary]);
 
-  const uploadDoc = () => {
+  const uploadDoc = async () => {
     if (!file) {
       alert("Please select a PDF file to upload.");
+      return;
+    }
+    const uid = localStorage.getItem("authID");
+    const studyRef = doc(db, "researchStudy", uid);
+    const studySnap = await getDoc(studyRef);
+
+    if(!studySnap.exists()){
+      alert("Please create a study before uploading a document.");
+      console.log("No such document!");
       return;
     }
 
@@ -105,6 +114,7 @@ export default function UploadDoc() {
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
+    
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -128,7 +138,7 @@ export default function UploadDoc() {
             updateDoc(uploadDocRef, {
               documentUrl: url
             });
-
+            
           })
           .catch((error) => {
             console.error("Error getting download URL:", error);
