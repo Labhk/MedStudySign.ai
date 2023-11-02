@@ -159,8 +159,8 @@ export default function Patients({ params }) {
     }, [signerEmail, fileUrl]);
     
     const createSummaryArray = (summary) => {
-        const summary1 = summary.replaceAll('Dr.', 'Dr');
-        const summaryArray = summary1.split('.');
+        const summary1 = summary?.replaceAll('Dr.', 'Dr');
+        const summaryArray = summary1?.split('.');
         setSummary(summaryArray); 
     }
 
@@ -260,7 +260,7 @@ export default function Patients({ params }) {
                             </div>
                             ) : (
                                 <ul className="list-outside list-square rounded-xl mx-3 my-2  md:mx-4 md:my-4 border-2 border-customDark bg-white md:px-44 px-10 py-4 md:py-8 text-justify text-sm md:text-xl text-customDark">
-                                {summary.slice(0, -1).map((item, index) => (
+                                {summary?.slice(0, -1).map((item, index) => (
                                     <li key={index} className="mb-2 md:mb-4 text-black">{item}.</li>
                                 ))}
                                 </ul>
